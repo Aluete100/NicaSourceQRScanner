@@ -4,6 +4,7 @@ import ScanQRScreen from '../../screens/ScanQRScreen'
 import ScannedListScreen from '../../screens/ScannedList'
 import { Provider } from 'react-redux'
 import store from '../../store/store'
+import CustomTabBar from '../../components/TabBar/CustomTabBar'
 
 export type RootTabParamList = {
     ScanQR: undefined
@@ -15,7 +16,7 @@ const RootTab = createBottomTabNavigator<RootTabParamList>()
 const AppNavigation = () => {
     return (
         <Provider store={store}>
-            <RootTab.Navigator initialRouteName="ScanQR">
+            <RootTab.Navigator initialRouteName="ScanQR" tabBar={(props) => <CustomTabBar {...props} />}>
                 <RootTab.Screen
                     name="ScanQR"
                     component={ScanQRScreen}
