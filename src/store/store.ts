@@ -5,6 +5,7 @@ const store = configureStore({
     reducer: {
        qr: qrReducer
     },
+    middleware: (getDefaultMiddleware) => [...getDefaultMiddleware({immutableCheck: false})]
 })
 
 export default store

@@ -15,21 +15,19 @@ const RootTab = createBottomTabNavigator<RootTabParamList>()
 
 const AppNavigation = () => {
     return (
-        <Provider store={store}>
-            <RootTab.Navigator initialRouteName="ScanQR" screenOptions={{
-                headerShown: false,
-                unmountOnBlur: true,
-            }} tabBar={(props) => <CustomTabBar {...props} />}>
-                <RootTab.Screen
-                    name="ScanQR"
-                    component={ScanQRScreen}
-                />
-                <RootTab.Screen
-                    name="ScannedList"
-                    component={ScannedListScreen}
-                />
-            </RootTab.Navigator>
-        </Provider>
+        <RootTab.Navigator initialRouteName="ScanQR" screenOptions={{
+            headerShown: false,
+            unmountOnBlur: true,
+        }} tabBar={(props) => <CustomTabBar {...props} />}>
+            <RootTab.Screen
+                name="ScanQR"
+                component={ScanQRScreen}
+            />
+            <RootTab.Screen
+                name="ScannedList"
+                component={ScannedListScreen}
+            />
+        </RootTab.Navigator>
     )
 }
 
