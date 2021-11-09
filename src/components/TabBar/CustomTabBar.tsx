@@ -1,11 +1,12 @@
 import { Ionicons } from "@expo/vector-icons"
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs"
+import { useNavigation } from "@react-navigation/core"
 import React from "react"
 import { Text, TouchableOpacity, View, StyleSheet, Image } from "react-native"
 
 const CustomTabBar = (props: BottomTabBarProps) => {
     const { state,  navigation } = props
-
+    
     const onPress = (isFocused: boolean, routeName: string) => {
         if (!isFocused) {
             navigation.navigate(routeName)
