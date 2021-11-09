@@ -4,7 +4,7 @@ import React from "react"
 import { Text, TouchableOpacity, View, StyleSheet, Image } from "react-native"
 
 const CustomTabBar = (props: BottomTabBarProps) => {
-    const { state, descriptors, navigation } = props
+    const { state,  navigation } = props
 
     const onPress = (isFocused: boolean, routeName: string) => {
         if (!isFocused) {

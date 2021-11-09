@@ -20,10 +20,17 @@ const AppNavigation = () => {
                 <RootTab.Screen
                     name="ScanQR"
                     component={ScanQRScreen}
+                    options={{
+                        headerShown: false,
+                    }}
                 />
                 <RootTab.Screen
                     name="ScannedList"
                     component={ScannedListScreen}
+                    options={{
+                        headerShown: false,
+                        // unmountOnBlur: true
+                    }}
                 />
             </RootTab.Navigator>
         </Provider>

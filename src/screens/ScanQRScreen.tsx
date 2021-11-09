@@ -2,6 +2,7 @@ import { useIsFocused } from '@react-navigation/core'
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner'
 import React, { useEffect, useRef, useState } from 'react'
 import { Text, View, StyleSheet, Modal, Dimensions } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
 import AlertModalDialog from '../components/AlertModalDialog'
 import { addQRToList } from '../store/slices/qrSlice'
@@ -11,10 +12,10 @@ interface ScanQRScreenProps { }
 const ScanQRScreen = (props: ScanQRScreenProps) => {
     const dispatch = useDispatch()
     const isFocused = useIsFocused()
-
-    const barcodeRef = useRef<BarCodeScanner>(null)
+    const scannerRef = useRef<BarCodeScanner>(null)
 
     const [hasPermission, setHasPermission] = useState<boolean | null>(null)
+    const [reRenderScanner, setReRenderScanner] = useState<boolean>(false)
     const [showScannedModal, setShowScannedModal] = useState<boolean>(false)
 
     useEffect(() => {
@@ -25,6 +26,12 @@ const ScanQRScreen = (props: ScanQRScreenProps) => {
         getCameraPermissions()
     }, [])
 
+    useEffect(() => {
+        if (!isFocused) {
+            setReRenderScanner(true)
+        }
+    }, [isFocused])
+
     const handleBarCodeScanned = (barcodeData: BarCodeEvent) => {
         const { data } = barcodeData
         setShowScannedModal(true)
@@ -32,40 +39,61 @@ const ScanQRScreen = (props: ScanQRScreenProps) => {
         dispatch(addQRToList(data))
     }
 
-    if (hasPermission === null) {
-        return <Text>Requesting for camera permission</Text>
-    }
-
     if (hasPermission === false) {
         return <Text>No access to camera</Text>
     }
 
     return (
-        <View style={styles.container}>
-            <BarCodeScanner
-                ref={barcodeRef}
-                style={styles.qrContainer}
-                onBarCodeScanned={showScannedModal ? undefined : handleBarCodeScanned}
-
-            />
+        <SafeAreaView style={styles.container}>
+            {!hasPermission ? <Text>Requesting for camera permission</Text> :
+                <BarCodeScanner
+                    style={[StyleSheet.absoluteFill, styles.container]}
+                    onBarCodeScanned={showScannedModal ? undefined : handleBarCodeScanned}
+                >
+                    <View style={styles.layerTop} />
+                    <View style={styles.layerCenter}>
+                        <View style={styles.layerLeft} />
+                        <View style={styles.focused} />
+                        <View style={styles.layerRight} />
+                    </View>
+                    <View style={styles.layerBottom} /></BarCodeScanner>
+            }
             <AlertModalDialog showModal={showScannedModal} titleMessage="Hey You!" subtitleMessage="QR data has been saved. All the info will be shown on the other tab." buttonMessage="Scan Again" onAcceptButtonPressed={() =>
                 setShowScannedModal(false)
             } />
-        </View>
+        </SafeAreaView>
     )
 }
 
-
+const opacity = 'rgba(0, 0, 0, .6)'
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
-        backgroundColor: "black"
+        flexDirection: "column",
     },
-    qrContainer: {
+    layerTop: {
+        flex: 2,
+        backgroundColor: opacity
+    },
+    layerCenter: {
         flex: 1,
-        marginHorizontal: 20,
-    }
+        flexDirection: 'row'
+    },
+    layerLeft: {
+        flex: 1,
+        backgroundColor: opacity
+    },
+    focused: {
+        flex: 10
+    },
+    layerRight: {
+        flex: 1,
+        backgroundColor: opacity
+    },
+    layerBottom: {
+        flex: 2,
+        backgroundColor: opacity
+    },
 })
 
 
