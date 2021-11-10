@@ -1,11 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit"
-import qrReducer from "./slices/qrSlice"
+import { configureStore } from '@reduxjs/toolkit'
+import qrReducer from './slices/qrSlice'
 
 const store = configureStore({
-    reducer: {
-       qr: qrReducer
-    },
-    middleware: (getDefaultMiddleware) => [...getDefaultMiddleware({immutableCheck: false})]
+  reducer: {
+    qr: qrReducer,
+  },
+  middleware: (getDefaultMiddleware) => [...getDefaultMiddleware({ immutableCheck: false })],
 })
 
 export default store

@@ -7,13 +7,15 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "lint": "eslint '**/*.{js,ts,tsx}' --fix"
   },
   "dependencies": {
     "@expo/vector-icons": "^12.0.0",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",
     "@reduxjs/toolkit": "^1.6.2",
+    "eslint-plugin-prettier": "^4.0.0",
     "expo": "~43.0.0",
     "expo-barcode-scanner": "~11.1.2",
     "expo-status-bar": "~1.1.0",
@@ -30,6 +32,12 @@
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.64.12",
     "@types/react-redux": "^7.1.20",
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
+    "@typescript-eslint/parser": "^5.3.1",
+    "eslint": "^8.2.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-react": "^7.27.0",
+    "prettier": "^2.4.1",
     "typescript": "~4.3.5"
   },
   "private": true

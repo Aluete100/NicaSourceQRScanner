@@ -1,12 +1,6 @@
 import React from 'react'
-import {
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Text,
-  Modal,
-  GestureResponderEvent,
-} from 'react-native'
+import { StyleSheet, TouchableOpacity, View, Text, Modal, GestureResponderEvent } from 'react-native'
+import { colors } from '../constants/colors'
 
 export interface ComponentProps {
   showModal: boolean
@@ -18,17 +12,13 @@ export interface ComponentProps {
 
 const AlertModalDialog = (props: ComponentProps) => {
   return (
-    <Modal animationType="slide" transparent visible={props.showModal}>
+    <Modal animationType="fade" transparent visible={props.showModal}>
       <View style={styles.modalContainer}>
         <View style={styles.modalCardContainer}>
-            <Text style={styles.titleText}>{props.titleMessage} </Text>
-          {props.subtitleMessage &&
-            <Text style={styles.subtitleText}> {props.subtitleMessage}</Text>
-          }
+          <Text style={styles.titleText}>{props.titleMessage} </Text>
+          {props.subtitleMessage && <Text style={styles.subtitleText}> {props.subtitleMessage}</Text>}
           <View style={styles.modalCardContentButtonContainer}>
-            <TouchableOpacity
-              onPress={props.onAcceptButtonPressed}
-              style={styles.buttonContainer}>
+            <TouchableOpacity onPress={props.onAcceptButtonPressed} style={styles.buttonContainer}>
               <Text style={styles.buttonText}>
                 <Text>{props.buttonMessage} </Text>
               </Text>
@@ -44,12 +34,12 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: "#00000095",
+    backgroundColor: colors.blackOpacity,
   },
   modalCardContainer: {
     marginHorizontal: 20,
     borderRadius: 10,
-    backgroundColor: "white",
+    backgroundColor: colors.white,
   },
   modalCardContentButtonContainer: {
     marginTop: 30,
@@ -62,8 +52,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 20,
     fontSize: 15,
-    fontWeight: "bold",
-    color: "black",
+    fontWeight: 'bold',
+    color: colors.black,
     textAlign: 'center',
   },
   subtitleText: {
@@ -71,7 +61,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginHorizontal: 20,
     fontSize: 12,
-    color: "black",
+    color: colors.black,
   },
   buttonContainer: {
     flex: 1,
@@ -79,11 +69,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 45,
     borderRadius: 30,
-    backgroundColor: "#ea70fa",
+    backgroundColor: colors.primaryColor,
   },
   buttonText: {
     fontSize: 12,
-    color: "white",
+    color: colors.white,
   },
 })
 
