@@ -22,7 +22,7 @@ _Copy/download the project and navigate to it_
 cd NicaSourceQRScanner
 ```
 ```
-npm install
+npm install or yarn install (use the one you like most, but try to avoid using both)
 ```
 _Last but not least, run the project and enjoy_
 ```
