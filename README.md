@@ -17,6 +17,10 @@ _Expo CLI_
 ```
 npm install --global expo-cli
 ```
+_EsLint Plugin VSCode_
+```
+Go to VSCode extensons and search for eslint plugin
+```
 _Copy/download the project and navigate to it_
 ```
 cd NicaSourceQRScanner
