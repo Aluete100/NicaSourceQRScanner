@@ -12,13 +12,13 @@ const qrSlice = createSlice({
   name: "QRData",
   initialState: initialState,
   reducers: {
-    addQRToList(state, action: PayloadAction<string>) {
+    addQR(state, action: PayloadAction<string>) {
       const updatedList = [...state.scannedQRs, action.payload]
       state.scannedQRs = updatedList
     }
   }
 })
 
-export const { addQRToList } = qrSlice.actions
+export const { addQR } = qrSlice.actions
 
 export default qrSlice.reducer

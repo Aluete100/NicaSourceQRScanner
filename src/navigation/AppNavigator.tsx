@@ -1,10 +1,10 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import ScanQRScreen from '../../screens/qrScan/ScanQRScreen'
-import ScannedListScreen from '../../screens/scannedList/ScannedList'
+import ScanQRScreen from '../screens/qrScan/ScanQRScreen'
+import ScannedListScreen from '../screens/scannedList/ScannedList'
 import { Provider } from 'react-redux'
-import store from '../../store/store'
-import CustomTabBar from '../../components/TabBar/CustomTabBar'
+import store from '../store/store'
+import CustomTabBar from '../components/TabBar/CustomTabBar'
 
 export type RootTabParamList = {
     ScanQR: undefined
@@ -17,7 +17,6 @@ const AppNavigation = () => {
     return (
         <RootTab.Navigator initialRouteName="ScanQR" screenOptions={{
             headerShown: false,
-            unmountOnBlur: true,
         }} tabBar={(props) => <CustomTabBar {...props} />}>
             <RootTab.Screen
                 name="ScanQR"

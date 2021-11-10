@@ -1,21 +1,18 @@
 import { Ionicons } from '@expo/vector-icons'
-import { useIsFocused } from '@react-navigation/core'
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner'
-import React, { useEffect, useRef, useState } from 'react'
-import { Text, View, StyleSheet, Modal, Dimensions, ActivityIndicator, Image } from 'react-native'
+import React, { useEffect,  useState } from 'react'
+import { Text,  StyleSheet,  Dimensions, Animated, Easing } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
 import AlertModalDialog from '../../components/AlertModalDialog'
-import { addQRToList } from '../../store/slices/qrSlice'
+import { addQR } from '../../store/slices/qrSlice'
 import PermissionsDenied from './components/PermissionsDenied'
 import RequestingPermissions from './components/RequestingPermissions'
 
-interface ScanQRScreenProps { }
-
-
-const ScanQRScreen = (props: ScanQRScreenProps) => {
+const ScanQRScreen = () => {
     const dispatch = useDispatch()
-    const isFocused = useIsFocused()
+
+    const [zoomAnim] = useState(new Animated.Value(1))
 
     const { width } = Dimensions.get('window')
     const qrSize = width * 0.7
@@ -31,13 +28,30 @@ const ScanQRScreen = (props: ScanQRScreenProps) => {
         getCameraPermissions()
     }, [])
 
+    useEffect(() => {
+        Animated.loop(
+            Animated.sequence([
+                Animated.timing(zoomAnim, {
+                    toValue: 0,
+                    duration: 1000,
+                    easing: Easing.linear,
+                    useNativeDriver: true
+                }),
+                Animated.timing(zoomAnim, {
+                    toValue: 1,
+                    duration: 1000,
+                    easing: Easing.linear,
+                    useNativeDriver: true,
+                })
+            ])
+        ).start()
+    }, [])
 
     const handleBarCodeScanned = (barcodeData: BarCodeEvent) => {
         const { data } = barcodeData
-        console.log(data)
         setShowScannedModal(true)
 
-        dispatch(addQRToList(data))
+        dispatch(addQR(data))
     }
 
     if (hasPermission === null) {
@@ -50,15 +64,16 @@ const ScanQRScreen = (props: ScanQRScreenProps) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            {isFocused &&
-                <BarCodeScanner
-                    style={[StyleSheet.absoluteFill, styles.qrContainer]}
-                    onBarCodeScanned={showScannedModal ? undefined : handleBarCodeScanned}
-                >
-                    <Text style={styles.scanText}>Scan your QR code</Text>
+            <BarCodeScanner
+                style={[StyleSheet.absoluteFill, styles.qrContainer]}
+                onBarCodeScanned={showScannedModal ? undefined : handleBarCodeScanned}
+            >
+                <Text style={styles.scanText}>Scan your QR code</Text>
+                <Animated.View style={{ opacity: zoomAnim }}>
                     <Ionicons name="scan-outline" size={qrSize} color="white" />
-                </BarCodeScanner>
-            }
+                </Animated.View>
+
+            </BarCodeScanner>
             <AlertModalDialog showModal={showScannedModal} titleMessage="Hey You!" subtitleMessage="QR data has been saved. All the info will be shown on the other tab." buttonMessage="Scan Again" onAcceptButtonPressed={() =>
                 setShowScannedModal(false)
             } />
